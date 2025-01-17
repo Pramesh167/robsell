@@ -41,7 +41,7 @@ function App() {
           <Route path="/homepage" element={<HomePage />} />
           <Route path="/addtocart" element={<Addtocart />} />
           <Route path="/standard" element={<SunGlasses />} />
-          <Route path="/powerglasses" element={<PowerGlasses />} />
+          <Route path="/weedgebot" element={<PowerGlasses />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/placeorder/:cart" element={<PlaceOrder />} />
           <Route path="/myorder" element={<MyOrders />} />
