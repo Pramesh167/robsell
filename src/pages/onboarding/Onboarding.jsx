@@ -29,8 +29,8 @@ const Onboarding = () => {
       <div className="relative flex-1 flex items-center justify-center bg-white bg-opacity-75 p-10">
         <div className="text-center text-black">
           <img src={logo} alt="Robsell Logo" className="w-24 mx-auto mb-4" />
-          <h1 className="text-5xl font-bold mb-4">Welcome to Lensify</h1>
-          <p className="text-lg mb-6">Your one-stop shop for power glasses and sunglasses.</p>
+          <h1 className="text-5xl font-bold mb-4">Robsell</h1>
+          <p className="text-lg mb-6">Get yourself cool bots.</p>
           <div className="flex justify-center space-x-4">
             <button
               onClick={handleLogin}

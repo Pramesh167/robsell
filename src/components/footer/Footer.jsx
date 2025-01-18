@@ -50,7 +50,7 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4 text-gray-800">Contact Us</h3>
             <p className="text-gray-600 mb-2">Contact Number: 123-456-7890</p>
-            <p className="text-gray-600 mb-4">Email Address: info@lensify.com</p>
+            <p className="text-gray-600 mb-4">Email Address: info@robsell.com</p>
             <h4 className="text-lg font-semibold mb-2 text-gray-800">Social</h4>
             <div className="flex space-x-4">
               {[Facebook, Instagram, Twitter, Youtube, Linkedin].map((Icon, index) => (

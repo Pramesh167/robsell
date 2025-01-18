@@ -54,10 +54,10 @@ const AdminPage = () => {
         <div className="flex items-center">
           <img
             src={logo}
-            alt="Lensify Logo"
+            alt="Robsell Logo"
             className="w-12 h-12 mr-2 rounded-full"
           />
-          <span className="text-2xl font-bold text-red-600">Lensify</span>
+          <span className="text-2xl font-bold text-red-600">Robsell</span>
         </div>
         <div className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-purple-600">
           Admin Panel
