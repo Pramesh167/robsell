@@ -17,7 +17,7 @@ function Register() {
     const [lastNameError, setLastNameError] = useState('');
     const [usernameError, setUsernameError] = useState('');
     const [emailError, setEmailError] = useState('');
-    const [phoneNumberError, setPhoneNumberError] = useState('')
+    const [phoneNumberError, setPhoneNumberError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
@@ -47,9 +47,9 @@ function Register() {
         } else {
             setEmailError('');
         }
-        if(!phoneNumber.trim()){
+        if (!phoneNumber.trim()) {
             setPhoneNumberError('Number is required');
-            isValid = false
+            isValid = false;
         } else {
             setPhoneNumberError('');
         }
@@ -73,7 +73,7 @@ function Register() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+
         if (!validateForm()) {
             return;
         }
@@ -87,36 +87,36 @@ function Register() {
             password: password,
         };
 
-        registerUserApi(data).then((res) => {
-            if(res.data.sucess === false){
-              toast.error(res.data.message)
-            } else {
-              toast.success(res.data.message)
-            }
-          })
-          .catch((error) => {
-              if (error.response && error.response.data && error.response.data.message) {
-                toast.error(error.response.data.message);
-              } else {
-                toast.error('Registration failed. Please try again.');
-              }
-          }); 
+        registerUserApi(data)
+            .then((res) => {
+                if (res.data.sucess === false) {
+                    toast.error(res.data.message);
+                } else {
+                    toast.success(res.data.message);
+                }
+            })
+            .catch((error) => {
+                if (error.response && error.response.data && error.response.data.message) {
+                    toast.error(error.response.data.message);
+                } else {
+                    toast.error('Registration failed. Please try again.');
+                }
+            });
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-500 to-pink-500 p-4">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 p-4">
             <Toaster />
-            <div className="bg-white rounded-lg shadow-xl overflow-hidden max-w-4xl w-full flex flex-col md:flex-row">
+            <div className="bg-gray-900 text-gray-200 rounded-lg shadow-xl overflow-hidden max-w-4xl w-full flex flex-col md:flex-row">
                 <div className="w-full md:w-1/2 p-8">
-                    <h2 className="text-3xl font-bold mb-2 text-gray-800">Register</h2>
-                    <p className="text-gray-600 mb-6">Please fill in the details to create an account</p>
+                    <h2 className="text-3xl font-bold mb-2 text-white">Register</h2>
+                    <p className="text-gray-400 mb-6">Please fill in the details to create an account</p>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
                             <input
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
                                 type="text"
-                                name="firstname"
                                 placeholder="First Name"
                                 value={firstName}
                                 onChange={(e) => setFirstName(e.target.value)}
@@ -125,9 +125,8 @@ function Register() {
                         </div>
                         <div>
                             <input
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
                                 type="text"
-                                name="lastname"
                                 placeholder="Last Name"
                                 value={lastName}
                                 onChange={(e) => setLastName(e.target.value)}
@@ -136,9 +135,8 @@ function Register() {
                         </div>
                         <div>
                             <input
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
                                 type="text"
-                                name="username"
                                 placeholder="Username"
                                 value={userName}
                                 onChange={(e) => setUsername(e.target.value)}
@@ -147,9 +145,8 @@ function Register() {
                         </div>
                         <div>
                             <input
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
                                 type="email"
-                                name="email"
                                 placeholder="Email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -158,9 +155,8 @@ function Register() {
                         </div>
                         <div>
                             <input
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
                                 type="tel"
-                                name="phone"
                                 placeholder="Phone Number"
                                 value={phoneNumber}
                                 onChange={(e) => setPhoneNumber(e.target.value)}
@@ -169,9 +165,8 @@ function Register() {
                         </div>
                         <div>
                             <input
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
                                 type="password"
-                                name="password"
                                 placeholder="Password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -180,24 +175,23 @@ function Register() {
                         </div>
                         <div>
                             <input
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
                                 type="password"
-                                name="confirm-password"
                                 placeholder="Confirm Password"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                             />
                             {confirmPasswordError && <p className="text-red-500 text-sm mt-1">{confirmPasswordError}</p>}
                         </div>
-                        <button type="submit" className="w-full bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 transition duration-300">
+                        <button type="submit" className="w-full bg-purple-700 hover:bg-purple-800 text-white py-2 rounded-md transition duration-300">
                             Register
                         </button>
                     </form>
 
                     <div className="mt-6 text-center">
-                        <p className="text-gray-600">
+                        <p>
                             Already have an account?{' '}
-                            <Link to="/login" className="text-purple-600 hover:underline">
+                            <Link to="/login" className="text-purple-400 hover:text-purple-300">
                                 Login
                             </Link>
                         </p>
@@ -216,4 +210,4 @@ function Register() {
     );
 }
 
-export default Register
+export default Register;

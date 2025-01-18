@@ -1,16 +1,40 @@
+/* Background Animation */
 @keyframes bg-motion {
-    0% {
-      background-position: 0 0;
-    }
-    50% {
-      background-position: 100% 100%;
-    }
-    100% {
-      background-position: 0 0;
-    }
+  0% {
+    background-position: 0 0;
   }
-  
-  .animate-bg-motion {
-    animation: bg-motion 15s linear infinite;
+  50% {
+    background-position: 100% 100%;
   }
-  
+  100% {
+    background-position: 0 0;
+  }
+}
+
+/* Animated Background */
+.animate-bg-motion {
+  animation: bg-motion 15s linear infinite;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* Darker Overlay */
+.bg-opacity-70 {
+  background-color: rgba(0, 0, 0, 0.9); /* Black with 70% opacity */
+}
+
+/* Semi-Transparent Background for Content */
+.bg-opacity-75 {
+  background-color: rgba(71, 71, 71, 0.75); /* White with 75% opacity */
+}
+
+/* Button Styling */
+button {
+  outline: none;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
