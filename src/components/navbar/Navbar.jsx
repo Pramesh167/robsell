@@ -53,7 +53,7 @@ const Navbar = () => {
       animate={{ y: 0 }}
       transition={{ type: "spring", stiffness: 120, damping: 20 }}
       className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-white shadow-md" : "bg-transparent"
+        scrolled ? "bg-black text-white shadow-md" : "bg-black text-white"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -63,10 +63,10 @@ const Navbar = () => {
               <img
                 className="h-10 w-auto mr-2"
                 src={applogo}
-                alt="Lensify Logo"
+                alt="Robsell Logo"
               />
-              <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">
-                Lensify
+              <span className="text-2xl font-bold text-white">
+                Robsell
               </span>
             </Link>
           </div>
@@ -79,7 +79,7 @@ const Navbar = () => {
             
             <Link
               to="/addtocart"
-              className="text-gray-600 hover:text-gray-800 transition-colors duration-200"
+              className="text-white hover:text-gray-300 transition-colors duration-200"
             >
               <ShoppingCart className="w-6 h-6" />
             </Link>
@@ -89,8 +89,8 @@ const Navbar = () => {
                 onClick={() => setIsOpen(!isOpen)}
                 className="flex items-center focus:outline-none"
               >
-                <User className="w-8 h-8 text-gray-600" />
-                <span className="text-gray-800 font-medium">
+                <User className="w-8 h-8 text-white" />
+                <span className="text-white font-medium">
                   {user ? user.firstName : "Guest"}
                 </span>
               </button>
@@ -121,12 +121,12 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
             >
               {isOpen ? (
-                <X className="h-6 w-6" />
+                <X className="h-6 w-6 text-white" />
               ) : (
-                <Menu className="h-6 w-6" />
+                <Menu className="h-6 w-6 text-white" />
               )}
             </button>
           </div>
@@ -144,14 +144,14 @@ const Navbar = () => {
             <NavLink to="/homepage" mobile>
               Home
             </NavLink>
-            <NavLink to="/sunglasses" mobile>
-              Sun Glasses
+            <NavLink to="/standard" mobile>
+              Standard
             </NavLink>
-            <NavLink to="/powerglasses" mobile>
-              Power Glasses
+            <NavLink to="/wedgebot" mobile>
+              wedgebot  
             </NavLink>
             <NavLink to="/myorder" mobile>
-              My Orders
+              Orders
             </NavLink>
             <NavLink to="/favourites" mobile>
               Favourites
@@ -173,7 +173,7 @@ const NavLink = ({ to, children, mobile }) => (
     className={`${
       mobile
         ? "block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
-        : "text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 relative group"
+        : "text-white hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 relative group"
     }`}
   >
     {children}

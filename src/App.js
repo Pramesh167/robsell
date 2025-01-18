@@ -10,15 +10,15 @@ import AdminPage from "./pages/admin/AdminPage";
 import AdminRoutes from "./protected_routes/AdminRoutes";
 import UserRoutes from "./protected_routes/UserRoutes";
 import Addtocart from "./pages/Cart/Cart";
-import PowerGlasses from "./pages/glasses/PowerGlasses";
 import ProductDetails from "./pages/product_details/ProductDetails";
-import SunGlasses from "./pages/glasses/Sunglasses";
 import PlaceOrder from "./pages/placeorder/PlaceOrder";
 import ForgetPassword from "./pages/forget_password/ForgetPassword";
 import MyOrders from "./pages/my_order/MyOrder";
 import Favorites from "./pages/favourites/Favourites";
-import EditProfile from "./pages/edit_profile/Edit_Profile";
+import EditProfile from "./pages/edit_profile/EditProfile";
 import EditAdminProfile from "./pages/admin/EditProfile";
+import StandardBot from "./pages/robots/StandardBot";
+import WedgeBot from "./pages/robots/WedgeBot";
 
 function App() {
   return (
@@ -40,8 +40,8 @@ function App() {
         <Route element={<UserRoutes />}>
           <Route path="/homepage" element={<HomePage />} />
           <Route path="/addtocart" element={<Addtocart />} />
-          <Route path="/standard" element={<SunGlasses />} />
-          <Route path="/weedgebot" element={<PowerGlasses />} />
+          <Route path="/standard" element={<StandardBot />} />
+          <Route path="/wedgebot" element={<WedgeBot />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/placeorder/:cart" element={<PlaceOrder />} />
           <Route path="/myorder" element={<MyOrders />} />
