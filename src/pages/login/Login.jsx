@@ -96,7 +96,7 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container bg-gradient-to-r from-blue-500 to-purple-600">
+    <div className="login-container bg-gradient-to-r from-black to-purple-900">
       <Toaster />
       <div className="login-box">
         <div className="login-form">
