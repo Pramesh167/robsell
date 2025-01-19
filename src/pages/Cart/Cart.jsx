@@ -118,7 +118,7 @@ const Cart = () => {
               >
                 <div className="flex flex-col md:flex-row items-center md:space-x-4 mb-4 md:mb-0">
                   <img
-                    src={`http://localhost:5500/products/${item.productId.productImage}`}
+                    src={`https://localhost:5500/products/${item.productId.productImage}`}
                     alt={item.productId.productName}
                     className="w-32 h-32 object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
                   />

@@ -127,7 +127,7 @@ const ViewProduct = () => {
               <tr key={product._id}>
                 <td className="px-4 py-2 border-b">
                   <img
-                    src={`http://localhost:5500/products/${product.productImage}`}
+                    src={`https://localhost:5500/products/${product.productImage}`}
                     alt={product.productName}
                     className="h-20 w-20 object-cover rounded"
                   />

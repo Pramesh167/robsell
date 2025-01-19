@@ -112,7 +112,7 @@ const EditProfile = () => {
                   <div className="flex-shrink-0">
                     {profile.profilePicture ? (
                       <img
-                        src={`http://localhost:5500/profile_pictures/${profile.profilePicture}`}
+                        src={`https://localhost:5500/profile_pictures/${profile.profilePicture}`}
                         alt="Profile"
                         className="h-16 w-16 rounded-full object-cover"
                       />

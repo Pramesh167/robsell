@@ -139,7 +139,7 @@ const MyOrders = () => {
                           className="flex items-center mb-4 p-3 bg-blue-50 rounded-lg"
                         >
                           <img
-                            src={`http://localhost:5500/products/${product.productId.productImage}`}
+                            src={`https://localhost:5500/products/${product.productId.productImage}`}
                             alt={product.productId.productName || 'Product Image'}
                             className="w-20 h-20 object-cover rounded-md mr-4 border border-blue-200"
                           />

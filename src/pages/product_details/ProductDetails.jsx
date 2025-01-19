@@ -233,14 +233,14 @@ const ProductDetails = () => {
             <div className="md:w-1/2 p-8">
               <div className="relative pb-[100%] mb-6 rounded-xl overflow-hidden shadow-lg">
                 <img
-                  src={`http://localhost:5500/products/${mainImage}`}
+                  src={`https://localhost:5500/products/${mainImage}`}
                   alt={product.productName}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                 />
               </div>
               <div className="flex space-x-4 overflow-x-auto pb-4">
                 <img
-                  src={`http://localhost:5500/products/${product.productImage}`}
+                  src={`https://localhost:5500/products/${product.productImage}`}
                   alt={product.productName}
                   className="w-24 h-24 object-cover rounded-lg cursor-pointer hover:opacity-75 transition duration-300 shadow-md"
                   onClick={() => setMainImage(product.productImage)}
@@ -249,7 +249,7 @@ const ProductDetails = () => {
                   product.additionalImages.map((img, index) => (
                     <img
                       key={index}
-                      src={`http://localhost:5500/products/${img}`}
+                      src={`https://localhost:5500/products/${img}`}
                       alt={`Additional ${index}`}
                       className="w-24 h-24 object-cover rounded-lg cursor-pointer hover:opacity-75 transition duration-300 shadow-md"
                       onClick={() => setMainImage(img)}

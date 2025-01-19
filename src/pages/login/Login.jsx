@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Recaptcha from "react-google-recaptcha";
 
 import { jwtDecode } from "jwt-decode";
 import loginui from "../../assets/images/loginui.png";
@@ -16,6 +17,8 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState("");
   const [role, setRole] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState("");
+  const recaptchaRef = useRef(null);
 
   const navigate = useNavigate();
 
@@ -37,14 +40,22 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-
+  
     if (!validation()) {
       return;
     }
-
+    if (!captchaToken) {
+      toast.error("CAPTCHA is missing or expired. Please complete it.");
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset();
+        recaptchaRef.current.execute();
+      }
+      return;
+    }
     const data = {
       email: email,
       password: password,
+      recaptchaToken: captchaToken,
     };
 
     loginUserApi(data)
@@ -68,7 +79,13 @@ const Login = () => {
           error.response.data.message
         ) {
           toast.error(error.response.data.message);
-        } else {
+        }if(
+          recaptchaRef.current){
+          recaptchaRef.current.reset();
+
+          }
+        
+         else {
           toast.error("Login failed. Please try again.");
         }
       });
@@ -117,7 +134,13 @@ const Login = () => {
                 </Link>
               </p>
             </div>
-            <button type="submit" className="login-button">
+            <Recaptcha
+              ref={recaptchaRef}
+              sitekey={"6LfMdLwqAAAAAFb3ezw9X3MVdeu5wVT7Gu4yZBvm"}
+              onChange={(token) => setCaptchaToken(token)}>
+
+              </Recaptcha>
+            <button type="submit" disabled={(!captchaToken)} className="login-button ">
               Login
             </button>
           </form>

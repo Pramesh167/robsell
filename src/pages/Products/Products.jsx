@@ -64,7 +64,7 @@ const Products = ({ productInformation, color }) => {
     <div className="w-full max-w-sm mx-auto bg-purple-900 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20" data-aos="fade-up">
       <div className="relative">
         <img
-          src={`http://localhost:5500/products/${productInformation.productImage}`}
+          src={`https://localhost:5500/products/${productInformation.productImage}`}
           className="w-full h-64 object-cover transition-transform duration-300 hover:scale-105"
           alt={productInformation.productName}
         />

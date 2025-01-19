@@ -128,7 +128,7 @@ const Favorites = () => {
                 >
                   <div className="relative">
                     <img
-                      src={`http://localhost:5500/products/${favorite.product.productImage}`}
+                      src={`https://localhost:5500/products/${favorite.product.productImage}`}
                       className="w-full h-64 object-cover transition-transform duration-300 hover:scale-105"
                       alt={favorite.product.productName}
                     />
