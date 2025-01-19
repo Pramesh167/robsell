@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { GoogleLogin } from "@react-oauth/google";
+
 import { jwtDecode } from "jwt-decode";
 import loginui from "../../assets/images/loginui.png";
 import "./Login.css";
 import { Toaster, toast } from "react-hot-toast";
 import {
-  googleLoginApi,
   loginUserApi,
-  getUserByGoogleEmail,
 } from "../../apis/Api";
 
 const Login = () => {
@@ -16,8 +14,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [googleToken, setGoogleToken] = useState("");
-  const [googleId, setGoogleId] = useState("");
   const [role, setRole] = useState("");
   const [showModal, setShowModal] = useState(false);
 
@@ -78,22 +74,6 @@ const Login = () => {
       });
   };
 
-  const handleGoogleLogin = () => {
-    googleLoginApi({ token: googleToken, googleId, role, password })
-      .then((response) => {
-        if (response.status === 201) {
-          toast.success("Login Successful");
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("user", JSON.stringify(response.data.user));
-          window.location.href = "/homepage";
-        } else {
-          console.error("Failed to send token to backend");
-        }
-      })
-      .catch((error) =>
-        console.error("Error sending token to backend:", error)
-      );
-  };
 
   return (
     <div className="login-container bg-gradient-to-r from-black to-purple-900">
@@ -141,35 +121,8 @@ const Login = () => {
               Login
             </button>
           </form>
-          <div className="google-login">
-            <GoogleLogin
-              onSuccess={(credentialResponse) => {
-                const token = credentialResponse.credential;
-                const details = jwtDecode(token);
-                setGoogleId(details.sub);
-                setGoogleToken(token);
 
-                getUserByGoogleEmail({ token })
-                  .then((response) => {
-                    if (response.status === 200) {
-                      handleGoogleLogin({ token });
-                    } else if (response.status === 201) {
-                      setShowModal(true);
-                    }
-                  })
-                  .catch((error) => {
-                    if (error.response && error.response.status === 400) {
-                      toast.warning(error.response.data.message);
-                    } else {
-                      toast.error("Error: Something went wrong");
-                    }
-                  });
-              }}
-              onError={() => {
-                console.log("Login Failed");
-              }}
-            />
-          </div>
+     
           <div className="register-link">
             <p>
               Don't have an account?{" "}
@@ -183,39 +136,6 @@ const Login = () => {
           <img src={loginui} alt="Login" />
         </div>
       </div>
-
-      {/* Modal for first-time Google login */}
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50">
-          <div className="w-full max-w-md rounded-lg bg-white p-8">
-            <h2 className="mb-4 text-2xl font-bold">
-              Complete Your Registration
-            </h2>
-            
-            <input
-              type="password"
-              placeholder="Set a password"
-              className="mb-4 w-full rounded-lg border px-4 py-2 focus:ring-2 focus:ring-indigo-500"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            
-            <div className="flex justify-end">
-              <button
-                onClick={() => setShowModal(false)}
-                className="mr-2 px-4 py-2 text-gray-600 hover:text-gray-800"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleGoogleLogin}
-                className="rounded-lg bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700"
-              >
-                Complete Registration
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
