@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FiEye, FiEyeOff } from 'react-icons/fi'; // Import eye icons for visibility toggle
 import registerui from '../../assets/images/registerui2.jpg';
 import { Link } from 'react-router-dom';
 import { Toaster, toast } from 'react-hot-toast';
@@ -12,6 +13,8 @@ function Register() {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const [firstNameError, setFirstNameError] = useState('');
     const [lastNameError, setLastNameError] = useState('');
@@ -79,17 +82,17 @@ function Register() {
         }
 
         const data = {
-            firstName: firstName,
-            lastName: lastName,
-            userName: userName,
-            email: email,
-            phoneNumber: phoneNumber,
-            password: password,
+            firstName,
+            lastName,
+            userName,
+            email,
+            phoneNumber,
+            password
         };
 
         registerUserApi(data)
             .then((res) => {
-                if (res.data.sucess === false) {
+                if (res.data.success === false) {
                     toast.error(res.data.message);
                 } else {
                     toast.success(res.data.message);
@@ -111,7 +114,6 @@ function Register() {
                 <div className="w-full md:w-1/2 p-8">
                     <h2 className="text-3xl font-bold mb-2 text-white">Register</h2>
                     <p className="text-gray-400 mb-6">Please fill in the details to create an account</p>
-
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
                             <input
@@ -163,41 +165,50 @@ function Register() {
                             />
                             {phoneNumberError && <p className="text-red-500 text-sm mt-1">{phoneNumberError}</p>}
                         </div>
-                        <div>
+                        <div className="relative">
                             <input
                                 className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 placeholder="Password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
+                            <button
+                                type="button"
+                                className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                {showPassword ? <FiEyeOff /> : <FiEye />}
+                            </button>
                             {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
                         </div>
-                        <div>
+                        <div className="relative">
                             <input
                                 className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
-                                type="password"
+                                type={showConfirmPassword ? "text" : "password"}
                                 placeholder="Confirm Password"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                             />
+                            <button
+                                type="button"
+                                className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            >
+                                {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
+                            </button>
                             {confirmPasswordError && <p className="text-red-500 text-sm mt-1">{confirmPasswordError}</p>}
                         </div>
                         <button type="submit" className="w-full bg-purple-700 hover:bg-purple-800 text-white py-2 rounded-md transition duration-300">
                             Register
                         </button>
                     </form>
-
                     <div className="mt-6 text-center">
                         <p>
-                            Already have an account?{' '}
-                            <Link to="/login" className="text-purple-400 hover:text-purple-300">
-                                Login
-                            </Link>
+                            Already have an account? <Link to="/login" className="text-purple-400 hover:text-purple-300">Login</Link>
                         </p>
                     </div>
                 </div>
-
                 <div className="hidden md:block w-1/2">
                     <img
                         src={registerui}
