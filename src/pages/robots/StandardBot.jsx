@@ -102,17 +102,17 @@ const StandardBot = () => {
           className="text-center mb-12"
         >
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-            Discover Your Perfect Sunglasses
+            Discover Your Drumbots or Standard
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Protect your eyes in style with our curated collection of premium sunglasses.
+            Easy for flippin out your opponent.
           </p>
         </motion.div>
 
         {products.length === 0 ? (
           <div className="text-center py-12">
             <Sun className="w-16 h-16 text-yellow-400 mx-auto mb-4" />
-            <h2 className="text-2xl font-semibold text-gray-700">No sunglasses available on this page</h2>
+            <h2 className="text-2xl font-semibold text-gray-700">No bots available on this page</h2>
             <p className="mt-2 text-gray-600">Try going back to the previous page or check again later!</p>
           </div>
         ) : (

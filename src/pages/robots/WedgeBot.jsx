@@ -103,11 +103,10 @@ const WedgeBot = () => {
           className="text-center mb-16"
         >
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-6">
-            Enhance Your Vision with Style
+            Discover Wedge Bot
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto">
-            Discover our collection of premium power glasses that combine
-            clarity with fashion.
+            Pin down your opponent with the Wedge Bot, or carry them off the arena!
           </p>
         </motion.div>
 

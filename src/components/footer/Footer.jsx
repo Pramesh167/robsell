@@ -16,7 +16,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <h2 className="text-2xl font-bold text-red-500">Robsell</h2>
-            <p className="text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+            <p className="text-gray-600">Grab yourself cool bots.</p>
             <div className="rounded-lg overflow-hidden">
             </div>
           </div>
@@ -56,7 +56,7 @@ const Footer = () => {
               {[Facebook, Instagram, Twitter, Youtube, Linkedin].map((Icon, index) => (
                 <a
                   key={index}
-                  href="#"
+                  href="https://www.youtube.com/@softwaricacollegeofite-com3054/streams"
                   className="text-gray-600 hover:text-red-500 transition-colors duration-200"
                 >
                   <Icon size={24} />
