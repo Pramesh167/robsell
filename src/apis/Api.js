@@ -58,6 +58,14 @@ export const googleLoginApi = (data) => Api.post("/api/user/google", data);
 export const getUserByGoogleEmail = (data) =>
 	Api.post(`/api/user/getGoogleUser`, data);
 
+export const verifyLoginOTPApi = (data) =>
+    Api.post("/api/user/verify_login_otp", data);
+   
+  // Resend Login OTP
+  export const resendLoginOTPApi = (data) =>
+    Api.post("/api/user/resend_login_otp", data);
+   
+
 
 //=========================== Product Apis ===========================
 
