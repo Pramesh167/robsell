@@ -32,6 +32,11 @@ export const testApi = () => Api.get('/test')
 export const getUserActivityLogs = (config) =>
     Api.get("/api/admin/activities", config);
 
+
+//delete user from activity log
+export const deleteUserApi = (userId) =>
+    Api.delete(`/api/admin/delete_user/${userId}`, config);
+
 //=========================== Auth Apis ===========================
 
 // Register Api
