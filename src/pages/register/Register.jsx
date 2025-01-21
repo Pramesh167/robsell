@@ -4,7 +4,6 @@ import registerui from '../../assets/images/registerui2.jpg';
 import { Link } from 'react-router-dom';
 import { Toaster, toast } from 'react-hot-toast';
 import { registerUserApi } from '../../apis/Api';
-import DOMPurify from 'dompurify';
 
 function Register() {
     const [firstName, setFirstName] = useState('');
@@ -25,11 +24,18 @@ function Register() {
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
-    const sanitizeInput = (input) => DOMPurify.sanitize(input);
+    const stripScriptTags = (input) => input.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "");
 
-    const handleInputChange = (setter) => (e) => {
-        const sanitizedValue = sanitizeInput(e.target.value);
-        setter(sanitizedValue);
+    const handleChange = (value, setter) => {
+        const cleanValue = stripScriptTags(value);
+        setter(cleanValue);
+    };
+
+    const handlePhoneNumberChange = (value) => {
+        const cleanValue = stripScriptTags(value);
+        if (/^\d*$/.test(cleanValue)) { // Regex checks if the input is numeric
+            setPhoneNumber(cleanValue);
+        }
     };
 
     const validateForm = () => {
@@ -73,7 +79,7 @@ function Register() {
         if (!confirmPassword.trim()) {
             setConfirmPasswordError('Confirm Password is required');
             isValid = false;
-        } else if (password.trim() !== confirmPassword.trim()) {
+        } else if (password !== confirmPassword) {
             setConfirmPasswordError('Passwords do not match');
             isValid = false;
         } else {
@@ -123,28 +129,106 @@ function Register() {
                     <h2 className="text-3xl font-bold mb-2 text-white">Register</h2>
                     <p className="text-gray-400 mb-6">Please fill in the details to create an account</p>
                     <form onSubmit={handleSubmit} className="space-y-4">
-                        <input type="text" placeholder="First Name" value={firstName} onChange={handleInputChange(setFirstName)} className="form-input" />
-                        {firstNameError && <p>{firstNameError}</p>}
-                        <input type="text" placeholder="Last Name" value={lastName} onChange={handleInputChange(setLastName)} className="form-input" />
-                        {lastNameError && <p>{lastNameError}</p>}
-                        <input type="text" placeholder="Username" value={userName} onChange={handleInputChange(setUsername)} className="form-input" />
-                        {usernameError && <p>{usernameError}</p>}
-                        <input type="email" placeholder="Email" value={email} onChange={handleInputChange(setEmail)} className="form-input" />
-                        {emailError && <p>{emailError}</p>}
-                        <input type="tel" placeholder="Phone Number" value={phoneNumber} onChange={handleInputChange(setPhoneNumber)} className="form-input" />
-                        {phoneNumberError && <p>{phoneNumberError}</p>}
-                        <input type={showPassword ? "text" : "password"} placeholder="Password" value={password} onChange={handleInputChange(setPassword)} className="form-input" />
-                        <button onClick={() => setShowPassword(!showPassword)}>{showPassword ? <FiEyeOff /> : <FiEye />}</button>
-                        {passwordError && <p>{passwordError}</p>}
-                        <input type={showConfirmPassword ? "text" : "password"} placeholder="Confirm Password" value={confirmPassword} onChange={handleInputChange(setConfirmPassword)} className="form-input" />
-                        <button onClick={() => setShowConfirmPassword(!showConfirmPassword)}>{showConfirmPassword ? <FiEyeOff /> : <FiEye />}</button>
-                        {confirmPasswordError && <p>{confirmPasswordError}</p>}
-                        <button type="submit">Register</button>
+                        <div>
+                            <input
+                                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
+                                type="text"
+                                placeholder="First Name"
+                                value={firstName}
+                                onChange={(e) => handleChange(e.target.value, setFirstName)}
+                            />
+                            {firstNameError && <p className="text-red-500 text-sm mt-1">{firstNameError}</p>}
+                        </div>
+                        <div>
+                            <input
+                                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
+                                type="text"
+                                placeholder="Last Name"
+                                value={lastName}
+                                onChange={(e) => handleChange(e.target.value, setLastName)}
+                            />
+                            {lastNameError && <p className="text-red-500 text-sm mt-1">{lastNameError}</p>}
+                        </div>
+                        <div>
+                            <input
+                                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
+                                type="text"
+                                placeholder="Username"
+                                value={userName}
+                                onChange={(e) => handleChange(e.target.value, setUsername)}
+                            />
+                            {usernameError && <p className="text-red-500 text-sm mt-1">{usernameError}</p>}
+                        </div>
+                        <div>
+                            <input
+                                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
+                                type="email"
+                                placeholder="Email"
+                                value={email}
+                                onChange={(e) => handleChange(e.target.value, setEmail)}
+                            />
+                            {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
+                        </div>
+                        <div>
+                            <input
+                                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
+                                type="tel"
+                                placeholder="Phone Number"
+                                value={phoneNumber}
+                                onChange={(e) => handlePhoneNumberChange(e.target.value)}
+                            />
+                            {phoneNumberError && <p className="text-red-500 text-sm mt-1">{phoneNumberError}</p>}
+                        </div>
+                        <div className="relative">
+                            <input
+                                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Password"
+                                value={password}
+                                onChange={(e) => handleChange(e.target.value, setPassword)}
+                            />
+                            <button
+                                type="button"
+                                className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                {showPassword ? <FiEyeOff /> : <FiEye />}
+                            </button>
+                            {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
+                        </div>
+                        <div className="relative">
+                            <input
+                                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
+                                type={showConfirmPassword ? "text" : "password"}
+                                placeholder="Confirm Password"
+                                value={confirmPassword}
+                                onChange={(e) => handleChange(e.target.value, setConfirmPassword)}
+                            />
+                            <button
+                                type="button"
+                                className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            >
+                                {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
+                            </button>
+                            {confirmPasswordError && <p className="text-red-500 text-sm mt-1">{confirmPasswordError}</p>}
+                        </div>
+                        <button type="submit" className="w-full bg-purple-700 hover:bg-purple-800 text-white py-2 rounded-md transition duration-300">
+                            Register
+                        </button>
                     </form>
-                    <Link to="/login">Already have an account? Log in</Link>
+                    <div className="mt-6 text-center">
+                        <p>
+                            Already have an account? <Link to="/login" className="text-purple-400 hover:text-purple-300">Login</Link>
+                        </p>
+                    </div>
                 </div>
-                <div className="image-section">
-                    <img src={registerui} alt="Register" />
+                <div className="hidden md:block w-1/2">
+                    <img
+                        src={registerui}
+                        alt="Register"
+                        className="object-cover w-full h-full"
+                    />
                 </div>
             </div>
         </div>
