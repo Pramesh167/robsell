@@ -25,7 +25,7 @@ const Banner = () => {
           {/* Text details section */}
           <div className='flex flex-col justify-center gap-6 sm:pt-0'>
             <h1 className='text-3xl sm:text-4xl font-bold text-white'>
-              Summer Sale on Sunglasses up to 50% Off
+              Get premium bots on very good prices.
             </h1>
             <p className='text-sm text-gray-200 tracking-wide leading-5'>
               Discover our best Robots and fight the Tournament.

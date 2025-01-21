@@ -87,10 +87,10 @@ const Favorites = () => {
           className="text-center mb-12"
         >
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Your Favorite Sunglasses
+            Your Favorite Robos
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Here's a collection of your most loved eyewear picks.
+            Here's a collection of your most loved robos.
           </p>
         </motion.div>
 

@@ -86,7 +86,7 @@ const StandardBot = () => {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
         <Loader className="w-12 h-12 text-indigo-600 animate-spin" />
-        <p className="mt-4 text-xl font-semibold text-gray-700">Loading amazing sunglasses...</p>
+        <p className="mt-4 text-xl font-semibold text-gray-700">Loading amazing bots...</p>
       </div>
     );
   }
