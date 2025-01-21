@@ -10,6 +10,8 @@ import {
   verifyLoginOTPApi,
 } from "../../apis/Api";
 import { Mail, Lock, Gamepad, Eye, EyeOff } from "lucide-react";
+import { refreshTokenApi } from "../../apis/Api";
+import { jwtDecode } from "jwt-decode";
 
 // Sanitize input to remove script tags and other potentially dangerous HTML
 const stripScriptTags = (input) => input.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "");
@@ -29,6 +31,51 @@ const Login = () => {
   const otpInputRefs = useRef([]); // Refs for OTP input boxes
 
   const navigate = useNavigate();
+  const checkTokenExpiry = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decoded = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+
+      if (decoded.exp < currentTime) {
+        // Token expired, log out the user
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.location.href = "/login";
+      } else {
+        // Refresh token 5 minutes before expiry
+        const timeUntilExpiry = (decoded.exp - currentTime) * 1000;
+        if (timeUntilExpiry < 5 * 60 * 1000) {
+          refreshToken();
+        }
+      }
+    }
+  };
+  const refreshToken = async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      try {
+        const response = await refreshTokenApi(user.id);
+        if (response.success) {
+          localStorage.setItem("token", response.token);
+        } else {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          window.location.href = "/login";
+        }
+      } catch (error) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.location.href = "/login";
+      }
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(checkTokenExpiry, 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
 
   // Reset all fields when the component is unmounted
   useEffect(() => {

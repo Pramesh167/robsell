@@ -176,4 +176,5 @@ export const initializeKhaltiPaymentApi = (data) =>
 export const verifyKhaltiPaymentApi = (params) =>
     Api.get("/api/khalti/complete-khalti-payment", { params });
 
-
+export const refreshTokenApi = (userId) =>
+    Api.post(`/api/user/refresh-token/${userId}`);
