@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { FiEye, FiEyeOff } from 'react-icons/fi'; // Import eye icons for visibility toggle
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 import registerui from '../../assets/images/registerui2.jpg';
 import { Link } from 'react-router-dom';
 import { Toaster, toast } from 'react-hot-toast';
 import { registerUserApi } from '../../apis/Api';
+import DOMPurify from 'dompurify';
 
 function Register() {
     const [firstName, setFirstName] = useState('');
@@ -23,6 +24,13 @@ function Register() {
     const [phoneNumberError, setPhoneNumberError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
+
+    const sanitizeInput = (input) => DOMPurify.sanitize(input);
+
+    const handleInputChange = (setter) => (e) => {
+        const sanitizedValue = sanitizeInput(e.target.value);
+        setter(sanitizedValue);
+    };
 
     const validateForm = () => {
         let isValid = true;
@@ -115,106 +123,28 @@ function Register() {
                     <h2 className="text-3xl font-bold mb-2 text-white">Register</h2>
                     <p className="text-gray-400 mb-6">Please fill in the details to create an account</p>
                     <form onSubmit={handleSubmit} className="space-y-4">
-                        <div>
-                            <input
-                                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
-                                type="text"
-                                placeholder="First Name"
-                                value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
-                            />
-                            {firstNameError && <p className="text-red-500 text-sm mt-1">{firstNameError}</p>}
-                        </div>
-                        <div>
-                            <input
-                                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
-                                type="text"
-                                placeholder="Last Name"
-                                value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
-                            />
-                            {lastNameError && <p className="text-red-500 text-sm mt-1">{lastNameError}</p>}
-                        </div>
-                        <div>
-                            <input
-                                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
-                                type="text"
-                                placeholder="Username"
-                                value={userName}
-                                onChange={(e) => setUsername(e.target.value)}
-                            />
-                            {usernameError && <p className="text-red-500 text-sm mt-1">{usernameError}</p>}
-                        </div>
-                        <div>
-                            <input
-                                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
-                                type="email"
-                                placeholder="Email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                            {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
-                        </div>
-                        <div>
-                            <input
-                                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
-                                type="tel"
-                                placeholder="Phone Number"
-                                value={phoneNumber}
-                                onChange={(e) => setPhoneNumber(e.target.value)}
-                            />
-                            {phoneNumberError && <p className="text-red-500 text-sm mt-1">{phoneNumberError}</p>}
-                        </div>
-                        <div className="relative">
-                            <input
-                                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
-                                type={showPassword ? "text" : "password"}
-                                placeholder="Password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                            <button
-                                type="button"
-                                className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
-                                onClick={() => setShowPassword(!showPassword)}
-                            >
-                                {showPassword ? <FiEyeOff /> : <FiEye />}
-                            </button>
-                            {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
-                        </div>
-                        <div className="relative">
-                            <input
-                                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-200"
-                                type={showConfirmPassword ? "text" : "password"}
-                                placeholder="Confirm Password"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                            />
-                            <button
-                                type="button"
-                                className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
-                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                            >
-                                {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
-                            </button>
-                            {confirmPasswordError && <p className="text-red-500 text-sm mt-1">{confirmPasswordError}</p>}
-                        </div>
-                        <button type="submit" className="w-full bg-purple-700 hover:bg-purple-800 text-white py-2 rounded-md transition duration-300">
-                            Register
-                        </button>
+                        <input type="text" placeholder="First Name" value={firstName} onChange={handleInputChange(setFirstName)} className="form-input" />
+                        {firstNameError && <p>{firstNameError}</p>}
+                        <input type="text" placeholder="Last Name" value={lastName} onChange={handleInputChange(setLastName)} className="form-input" />
+                        {lastNameError && <p>{lastNameError}</p>}
+                        <input type="text" placeholder="Username" value={userName} onChange={handleInputChange(setUsername)} className="form-input" />
+                        {usernameError && <p>{usernameError}</p>}
+                        <input type="email" placeholder="Email" value={email} onChange={handleInputChange(setEmail)} className="form-input" />
+                        {emailError && <p>{emailError}</p>}
+                        <input type="tel" placeholder="Phone Number" value={phoneNumber} onChange={handleInputChange(setPhoneNumber)} className="form-input" />
+                        {phoneNumberError && <p>{phoneNumberError}</p>}
+                        <input type={showPassword ? "text" : "password"} placeholder="Password" value={password} onChange={handleInputChange(setPassword)} className="form-input" />
+                        <button onClick={() => setShowPassword(!showPassword)}>{showPassword ? <FiEyeOff /> : <FiEye />}</button>
+                        {passwordError && <p>{passwordError}</p>}
+                        <input type={showConfirmPassword ? "text" : "password"} placeholder="Confirm Password" value={confirmPassword} onChange={handleInputChange(setConfirmPassword)} className="form-input" />
+                        <button onClick={() => setShowConfirmPassword(!showConfirmPassword)}>{showConfirmPassword ? <FiEyeOff /> : <FiEye />}</button>
+                        {confirmPasswordError && <p>{confirmPasswordError}</p>}
+                        <button type="submit">Register</button>
                     </form>
-                    <div className="mt-6 text-center">
-                        <p>
-                            Already have an account? <Link to="/login" className="text-purple-400 hover:text-purple-300">Login</Link>
-                        </p>
-                    </div>
+                    <Link to="/login">Already have an account? Log in</Link>
                 </div>
-                <div className="hidden md:block w-1/2">
-                    <img
-                        src={registerui}
-                        alt="Register"
-                        className="object-cover w-full h-full"
-                    />
+                <div className="image-section">
+                    <img src={registerui} alt="Register" />
                 </div>
             </div>
         </div>
