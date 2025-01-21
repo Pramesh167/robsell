@@ -19,6 +19,7 @@ import EditProfile from "./pages/edit_profile/EditProfile";
 import EditAdminProfile from "./pages/admin/EditProfile";
 import StandardBot from "./pages/robots/StandardBot";
 import WedgeBot from "./pages/robots/WedgeBot";
+import UserLog from "./pages/admin/UserLog";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         {/* Admin Protected Routes */}
         <Route element={<AdminRoutes />}>
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/userlog" element={<UserLog />} />
           <Route path="/adminprofile" element={<EditAdminProfile />} />
           {/* <Route path='/add-product' element={<AddProduct />} /> */}
         </Route>

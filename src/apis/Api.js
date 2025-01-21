@@ -28,6 +28,10 @@ const config = {
 export const testApi = () => Api.get('/test')
 
 
+//==activity log
+export const getUserActivityLogs = (config) =>
+    Api.get("/api/admin/activities", config);
+
 //=========================== Auth Apis ===========================
 
 // Register Api
