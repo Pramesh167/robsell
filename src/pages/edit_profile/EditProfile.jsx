@@ -43,28 +43,57 @@ const EditProfile = () => {
     setProfile({ ...profile, [name]: value });
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append("profilePicture", file);
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     const formData = new FormData();
+  //     formData.append("profilePicture", file);
 
-      uploadProfilePictureApi(formData)
-        .then((res) => {
-          if (res.status === 200) {
-            toast.success(res.data.message); 
-            setProfile({ ...profile, profilePicture: res.data.profilePicture }); 
-          } else {
-            toast.error(res.data.message); 
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          toast.error("Failed to upload profile picture");
-        });
-    }
-  };
+  //     uploadProfilePictureApi(formData)
+  //       .then((res) => {
+  //         if (res.status === 200) {
+  //           toast.success(res.data.message); 
+  //           setProfile({ ...profile, profilePicture: res.data.profilePicture }); 
+  //         } else {
+  //           toast.error(res.data.message); 
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         toast.error("Failed to upload profile picture");
+  //       });
+  //   }
+  // };
 
+    const handleImageChange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        // Validate file type
+        const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+        if (!allowedTypes.includes(file.type)) {
+          toast.error("Only image files (JPEG, PNG, GIF) are allowed.");
+          return;
+        }
+  
+        const formData = new FormData();
+        formData.append("profilePicture", file);
+  
+        uploadProfilePictureApi(formData)
+          .then((res) => {
+            if (res.status === 200) {
+              toast.success(res.data.message);
+              setProfile({ ...profile, profilePicture: res.data.profilePicture });
+            } else {
+              toast.error(res.data.message);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            toast.error("Failed to upload profile picture");
+          });
+      }
+    };
+    
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedProfile = {
