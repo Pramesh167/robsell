@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import registerui from '../../assets/images/registerui2.jpg';
 import { Link } from 'react-router-dom';
@@ -24,6 +24,34 @@ function Register() {
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
+    // Password checklist state
+    const [passwordChecklist, setPasswordChecklist] = useState({
+        minLength: false,
+        hasLowercase: false,
+        hasUppercase: false,
+        hasSpecialChar: false,
+    });
+
+    // Validate password requirements
+    const validatePassword = (password) => {
+        const minLength = password.length >= 8;
+        const hasLowercase = /[a-z]/.test(password);
+        const hasUppercase = /[A-Z]/.test(password);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+        setPasswordChecklist({
+            minLength,
+            hasLowercase,
+            hasUppercase,
+            hasSpecialChar,
+        });
+    };
+
+    // Update password checklist whenever password changes
+    useEffect(() => {
+        validatePassword(password);
+    }, [password]);
+
     const stripScriptTags = (input) => input.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "");
 
     const handleChange = (value, setter) => {
@@ -33,7 +61,7 @@ function Register() {
 
     const handlePhoneNumberChange = (value) => {
         const cleanValue = stripScriptTags(value);
-        if (/^\d*$/.test(cleanValue)) { // Regex checks if the input is numeric
+        if (/^\d*$/.test(cleanValue)) {
             setPhoneNumber(cleanValue);
         }
     };
@@ -72,6 +100,9 @@ function Register() {
         }
         if (!password.trim()) {
             setPasswordError('Password is required');
+            isValid = false;
+        } else if (!passwordChecklist.minLength || !passwordChecklist.hasLowercase || !passwordChecklist.hasUppercase || !passwordChecklist.hasSpecialChar) {
+            setPasswordError('Password does not meet the requirements');
             isValid = false;
         } else {
             setPasswordError('');
@@ -195,6 +226,24 @@ function Register() {
                                 {showPassword ? <FiEyeOff /> : <FiEye />}
                             </button>
                             {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
+                        </div>
+                        {/* Password Checklist */}
+                        <div className="text-sm text-gray-400">
+                            <p>Password must meet the following requirements:</p>
+                            <ul className="list-disc pl-5">
+                                <li className={passwordChecklist.minLength ? 'text-green-500' : 'text-red-500'}>
+                                    At least 8 characters
+                                </li>
+                                <li className={passwordChecklist.hasLowercase ? 'text-green-500' : 'text-red-500'}>
+                                    Contains a lowercase letter
+                                </li>
+                                <li className={passwordChecklist.hasUppercase ? 'text-green-500' : 'text-red-500'}>
+                                    Contains an uppercase letter
+                                </li>
+                                <li className={passwordChecklist.hasSpecialChar ? 'text-green-500' : 'text-red-500'}>
+                                    Contains a special character
+                                </li>
+                            </ul>
                         </div>
                         <div className="relative">
                             <input
