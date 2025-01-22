@@ -6,11 +6,13 @@ import {
   FaClipboardList,
   FaUserCircle,
   FaSignOutAlt,
+  FaUserClock,
 } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import AddProduct from "./AddProduct";
 import ViewProduct from "./ViewProduct";
 import ViewOrder from "./ViewOrder";
+import UserLog from "./UserLog"; // Import the UserLog component
 import logo from "../../assets/images/applogo.png";
 import { toast } from "react-hot-toast";
 import { getCurrentUserApi } from "../../apis/Api";
@@ -116,6 +118,12 @@ const AdminPage = () => {
           >
             <FaClipboardList className="mr-2" /> Order Details
           </Tab>
+          <Tab
+            className="bg-red-600 text-white py-2 px-6 rounded-full flex items-center mx-2 transition-all duration-300 ease-in-out"
+            selectedClassName="bg-purple-600 shadow-lg transform scale-105"
+          >
+            <FaUserClock className="mr-2" /> User Logs
+          </Tab>
         </TabList>
         <div className="bg-white rounded-lg shadow-lg p-6">
           <TabPanel>
@@ -143,6 +151,15 @@ const AdminPage = () => {
               transition={{ duration: 0.5 }}
             >
               <ViewOrder />
+            </motion.div>
+          </TabPanel>
+          <TabPanel>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <UserLog />
             </motion.div>
           </TabPanel>
         </div>
