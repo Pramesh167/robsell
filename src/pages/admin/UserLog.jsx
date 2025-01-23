@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Space, Spin, Alert, Button, message } from "antd";
+import { Table, Space, Spin, Alert, Button, message, Card } from "antd";
 import { getUserActivityLogs, deleteUserApi } from "../../apis/Api";
 
 const UserLog = () => {
@@ -54,7 +54,7 @@ const UserLog = () => {
       dataIndex: "user",
       key: "user",
       render: (user) => (
-        <span>
+        <span style={{ fontWeight: "bold" }}>
           {user?.firstName} {user?.lastName} ({user?.email})
         </span>
       ),
@@ -73,13 +73,19 @@ const UserLog = () => {
       title: "Timestamp",
       dataIndex: "timestamp",
       key: "timestamp",
-      render: (timestamp) => new Date(timestamp).toLocaleString(),
+      render: (timestamp) => (
+        <span style={{ color: "#1890ff" }}>
+          {new Date(timestamp).toLocaleString()}
+        </span>
+      ),
     },
     {
       title: "Details",
       dataIndex: "details",
       key: "details",
-      render: (details) => JSON.stringify(details),
+      render: (details) => (
+        <span style={{ fontStyle: "italic" }}>{JSON.stringify(details)}</span>
+      ),
     },
     {
       title: "Action",
@@ -87,7 +93,7 @@ const UserLog = () => {
       render: (_, record) => (
         <Space size="middle">
           <Button
-            type="link"
+            type="primary"
             danger
             onClick={() => handleDeleteUser(record.user._id)}
           >
@@ -115,15 +121,19 @@ const UserLog = () => {
   }
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>User Activity Logs</h1>
+    <Card
+      title={<h1 style={{ margin: 0 }}>User Activity Logs</h1>}
+      style={{ margin: "20px", borderRadius: "8px", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}
+    >
       <Table
         dataSource={activityLogs}
         columns={columns}
         rowKey="_id"
         pagination={{ pageSize: 10 }}
+        bordered
+        style={{ borderRadius: "8px" }}
       />
-    </div>
+    </Card>
   );
 };
 
