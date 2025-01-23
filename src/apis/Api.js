@@ -106,7 +106,7 @@ export const addToCartApi = (data) => Api.post('/api/cart/add_to_cart', data,con
 export const getCartApi = () => Api.get('/api/cart/get_cart',config)
 
 // delete cart item api
-export const deleteCartItemApi = (id) => Api.delete(`/api/cart/remove_cart_item/${id}`,config)
+export const deleteCartItemApi = (id) => Api.put(`/api/cart/remove_cart_item/${id}`,config)
 
 // update cart status api
 export const updateStatusApi = () => Api.put(`/api/cart/update_status`,'',config)
