@@ -159,7 +159,7 @@ export const addFavouriteApi = (data) => Api.post('/api/favourite/add_favourite'
 export const getFavouritesApi = () => Api.get('/api/favourite/get_favourite',config)
 
 // delete favourite api
-export const deleteFavouriteApi = (id) => Api.delete(`/api/favourite/remove_favourite/${id}`,config)
+export const deleteFavouriteApi = (id) => Api.put(`/api/favourite/remove_favourite/${id}`,config)
 
 
 // Payment api
