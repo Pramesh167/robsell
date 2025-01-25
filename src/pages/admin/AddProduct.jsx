@@ -1,9 +1,10 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { createProductApi } from '../../apis/Api';
 import { motion } from 'framer-motion';
 import { Camera, Package, DollarSign, Hash, FileText } from 'lucide-react';
+import axios from 'axios';
 
 const AddProduct = () => {
   const [productName, setProductName] = useState('');
@@ -13,6 +14,28 @@ const AddProduct = () => {
   const [productQuantity, setProductQuantity] = useState('');
   const [productImage, setProductImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [csrfToken, setCsrfToken] = useState(null); // State to store CSRF token
+
+  // Fetch CSRF token when the component mounts
+  useEffect(() => {
+    const fetchCsrfToken = async () => {
+      try {
+        const response = await axios.get(
+          "https://localhost:5500/api/csrf-token",
+          {
+            withCredentials: true, // Include cookies
+          }
+        );
+        setCsrfToken(response.data.csrfToken); // Store the CSRF token
+      } catch (error) {
+        console.error("Error fetching CSRF token:", error);
+      }
+    };
+
+    fetchCsrfToken();
+  }, []);
+
+
 
   const handleImage = (event) => {
     const file = event.target.files[0];
@@ -29,7 +52,7 @@ const AddProduct = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     const formData = new FormData();
@@ -39,24 +62,54 @@ const AddProduct = () => {
     formData.append('productDescription', productDescription);
     formData.append('productQuantity', productQuantity);
     formData.append('productImage', productImage);
+    try {
+      const response = await axios.post(
+        "https://localhost:5500/api/product/create",
+        formData,
+        {
+          headers: {
+            "X-CSRF-Token": csrfToken, 
+          },
+          withCredentials: true,
+        }
+      );
 
-    createProductApi(formData)
-      .then((res) => {
-        if (res.data.success) {
-          toast.success(res.data.message);
+      if (response.status === 201) {
+        toast.success(response.data.message);
+
+        
+      }
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 400) {
+          toast.warning(error.response.data.message);
+        } else if (error.response.status === 500) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error("Something went wrong");
         }
-      })
-      .catch((error) => {
-        if (error.response) {
-          if (error.response.status === 400) {
-            toast.error(error.response.data.message);
-          } else if (error.response.status === 401) {
-            toast.error(error.response.data.message);
-          } else {
-            toast.error("Something went wrong");
-          }
-        }
-      });
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
+
+    // createProductApi(formData)
+    //   .then((res) => {
+    //     if (res.data.success) {
+    //       toast.success(res.data.message);
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     if (error.response) {
+    //       if (error.response.status === 400) {
+    //         toast.error(error.response.data.message);
+    //       } else if (error.response.status === 401) {
+    //         toast.error(error.response.data.message);
+    //       } else {
+    //         toast.error("Something went wrong");
+    //       }
+    //     }
+    //   });
   };
 
   return (

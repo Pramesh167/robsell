@@ -24,6 +24,29 @@ const config = {
         'authorization': `Bearer ${localStorage.getItem('token')}`
     }
 }
+
+
+const fetchCsrfToken = async () => {
+    try {
+      const response = await axios.get("https://localhost:5500/api/csrf-token", {
+        withCredentials: true, // Include cookies
+      });
+      return response.data.csrfToken; // Return the CSRF token
+    } catch (error) {
+      console.error("Error fetching CSRF token:", error);
+      return null;
+    }
+  };
+  
+  // Store the CSRF token in a variable or state
+  let csrfToken = null;
+  
+  // Fetch and store the CSRF token when the app loads
+  fetchCsrfToken().then((token) => {
+    csrfToken = token;
+    console.log("CSRF Token:", csrfToken);
+  });
+
 // Test API 
 export const testApi = () => Api.get('/test')
 
@@ -187,3 +210,4 @@ export const verifyKhaltiPaymentApi = (params) =>
 
 export const refreshTokenApi = (userId) =>
     Api.post(`/api/user/refresh-token/${userId}`);
+
